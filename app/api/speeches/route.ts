@@ -43,15 +43,9 @@ export async function GET(request: Request) {
       const meetingName = (meeting['meeting_name'] as string) ?? ''
       const shortContent = `【${meetingName}】${content}`
 
-      if (speakers.length === 0) {
-        if (!memberName) {
-          speeches.push({ term: '11', sessionPeriod: '', meetingTimes: '', meetingDate: date, name: '', committee, content: shortContent, party: '' })
-        }
-      } else {
-        for (const name of speakers) {
-          if (memberName && !name.includes(memberName)) continue
-          speeches.push({ term: '11', sessionPeriod: '', meetingTimes: '', meetingDate: date, name, committee, content: shortContent, party: '' })
-        }
+      for (const name of speakers) {
+        if (memberName && !name.includes(memberName)) continue
+        speeches.push({ term: '11', sessionPeriod: '', meetingTimes: '', meetingDate: date, name, committee, content: shortContent, party: '' })
       }
     }
 

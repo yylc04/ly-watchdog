@@ -33,6 +33,7 @@ body {
   color: var(--text-primary);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans TC', sans-serif;
   margin: 0;
+  overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {
@@ -92,3 +93,39 @@ body {
 .attendance-low  { color: #ef4444; }
 .attendance-mid  { color: #eab308; }
 .attendance-high { color: #22c55e; }
+
+/* ── Responsive layout ── */
+.main-content {
+  margin-left: 224px;
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+/* 2-column grid in expanded bill card — collapses on mobile */
+.detail-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* ── Mobile overrides (< 768px) ── */
+@media (max-width: 767px) {
+  .main-content {
+    margin-left: 0;
+    padding-bottom: 68px; /* room for bottom nav */
+  }
+
+  .card {
+    padding: 14px;
+    border-radius: 10px;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Ensure all interactive elements have comfortable tap targets */
+  button, select, input[type="text"] {
+    min-height: 40px;
+  }
+}

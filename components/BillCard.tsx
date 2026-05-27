@@ -167,7 +167,7 @@ export default function BillCard({ bill }: BillCardProps) {
           </div>
 
           {/* Detail grid */}
-          <div className="grid gap-3" style={{ gridTemplateColumns: '1fr 1fr' }}>
+          <div className="detail-grid">
             {/* Committee */}
             <div className="rounded-lg p-3" style={{ background: 'var(--bg-primary)', border: '1px solid var(--border)' }}>
               <div className="flex items-center gap-1.5 mb-1.5">

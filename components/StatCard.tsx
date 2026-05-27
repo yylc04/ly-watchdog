@@ -21,15 +21,15 @@ export default function StatCard({ title, value, subtitle, icon: Icon, color, tr
   const c = colorMap[color]
   return (
     <div className="card">
-      <div className="flex items-start justify-between">
-        <div className="flex-1">
-          <div className="text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>{title}</div>
-          <div className="text-3xl font-bold" style={{ color: 'var(--text-primary)' }}>{value}</div>
-          {subtitle && <div className="text-xs mt-1" style={{ color: 'var(--text-secondary)' }}>{subtitle}</div>}
+      <div className="flex items-start justify-between gap-2">
+        <div className="flex-1 min-w-0">
+          <div className="text-xs md:text-sm font-medium mb-1 truncate" style={{ color: 'var(--text-secondary)' }}>{title}</div>
+          <div className="text-2xl md:text-3xl font-bold" style={{ color: 'var(--text-primary)' }}>{value}</div>
+          {subtitle && <div className="text-xs mt-1 leading-snug" style={{ color: 'var(--text-secondary)' }}>{subtitle}</div>}
           {trend && <div className="text-xs mt-1" style={{ color: c.text }}>{trend}</div>}
         </div>
-        <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: c.bg, border: `1px solid ${c.border}` }}>
-          <Icon size={22} color={c.icon} />
+        <div className="w-9 h-9 md:w-11 md:h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: c.bg, border: `1px solid ${c.border}` }}>
+          <Icon size={18} color={c.icon} />
         </div>
       </div>
     </div>

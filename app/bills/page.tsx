@@ -50,9 +50,9 @@ function BillsContent() {
   }
 
   return (
-    <div className="p-8">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>法案審查進度</h1>
+    <div className="p-4 md:p-8">
+      <div className="mb-5 md:mb-6">
+        <h1 className="text-xl md:text-2xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>法案審查進度</h1>
         <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
           115年（2026年）1月至5月，立法院法律提案追蹤
         </p>
@@ -60,12 +60,12 @@ function BillsContent() {
 
       {/* Progress overview */}
       {!loading && (
-        <div className="card mb-6">
-          <div className="flex items-center justify-between mb-4">
+        <div className="card mb-5 md:mb-6">
+          <div className="flex items-center justify-between mb-3">
             <span className="font-medium text-sm" style={{ color: 'var(--text-primary)' }}>審議進度總覽</span>
             <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>共 {stats.total} 件</span>
           </div>
-          <div className="flex h-4 rounded-full overflow-hidden gap-0.5">
+          <div className="flex h-3 md:h-4 rounded-full overflow-hidden gap-0.5">
             {[
               { pct: stats.passed,   color: '#22c55e' },
               { pct: stats.reviewing, color: '#60a5fa' },
@@ -77,7 +77,7 @@ function BillsContent() {
               )
             ))}
           </div>
-          <div className="flex gap-4 mt-3 flex-wrap">
+          <div className="flex gap-3 md:gap-4 mt-3 flex-wrap">
             {[
               { label: '已通過', value: stats.passed,   color: '#22c55e' },
               { label: '審查中', value: stats.reviewing, color: '#60a5fa' },
@@ -85,7 +85,7 @@ function BillsContent() {
               { label: '已撤回', value: stats.withdrawn, color: '#ef4444' },
             ].map(({ label, value, color }) => (
               <div key={label} className="flex items-center gap-1.5 text-xs" style={{ color: 'var(--text-secondary)' }}>
-                <div className="w-2.5 h-2.5 rounded-full" style={{ background: color }} />
+                <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: color }} />
                 {label}: <span style={{ color, fontWeight: 600 }}>{value}</span>
               </div>
             ))}
@@ -94,22 +94,23 @@ function BillsContent() {
       )}
 
       {/* Tabs + search */}
-      <div className="card mb-6">
-        <div className="flex flex-wrap gap-2 mb-4">
+      <div className="card mb-5 md:mb-6">
+        {/* Status tabs — wrap on mobile */}
+        <div className="flex flex-wrap gap-1.5 md:gap-2 mb-3 md:mb-4">
           {STATUS_TABS.map(({ key, label, icon: Icon, color }) => {
             const active = status === key
             const cnt = countFor(key)
             return (
               <button key={key} onClick={() => setStatus(key)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
+                className="flex items-center gap-1 md:gap-1.5 px-2.5 md:px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
                 style={{
                   background: active ? color + '15' : 'transparent',
                   color: active ? color : 'var(--text-secondary)',
                   border: active ? `1px solid ${color}30` : '1px solid transparent',
                 }}>
-                <Icon size={12} />
+                <Icon size={11} />
                 {label}
-                <span className="ml-0.5 px-1.5 py-0.5 rounded-full text-xs" style={{ background: 'var(--bg-primary)', color: 'var(--text-secondary)' }}>
+                <span className="px-1 py-0.5 rounded-full text-xs" style={{ background: 'var(--bg-primary)', color: 'var(--text-secondary)', fontSize: 10 }}>
                   {cnt}
                 </span>
               </button>
@@ -120,7 +121,7 @@ function BillsContent() {
           <Search size={14} style={{ color: 'var(--text-secondary)' }} />
           <input
             type="text"
-            placeholder="搜尋法案名稱、提案人、提案單位…"
+            placeholder="搜尋法案名稱、提案人…"
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="bg-transparent text-sm outline-none flex-1"

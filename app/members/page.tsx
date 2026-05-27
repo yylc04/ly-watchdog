@@ -47,9 +47,9 @@ export default function MembersPage() {
     : 0
 
   return (
-    <div className="p-8">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>委員出席率追蹤</h1>
+    <div className="p-4 md:p-8">
+      <div className="mb-5 md:mb-6">
+        <h1 className="text-xl md:text-2xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>委員出席率追蹤</h1>
         <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
           第11屆立法委員出席狀況，出席率低於 70% 標示為警示
         </p>
@@ -57,58 +57,58 @@ export default function MembersPage() {
 
       {/* Summary bar */}
       {!loading && (
-        <div className="grid grid-cols-3 gap-4 mb-6">
-          <div className="card text-center">
-            <div className="text-2xl font-bold mb-0.5" style={{ color: '#60a5fa' }}>{members.length}</div>
+        <div className="grid grid-cols-3 gap-3 md:gap-4 mb-5 md:mb-6">
+          <div className="card text-center px-2">
+            <div className="text-xl md:text-2xl font-bold mb-0.5" style={{ color: '#60a5fa' }}>{members.length}</div>
             <div className="text-xs" style={{ color: 'var(--text-secondary)' }}>委員總數</div>
           </div>
-          <div className="card text-center">
-            <div className="text-2xl font-bold mb-0.5" style={{ color: avgRate >= 80 ? '#22c55e' : '#eab308' }}>{avgRate.toFixed(1)}%</div>
+          <div className="card text-center px-2">
+            <div className="text-xl md:text-2xl font-bold mb-0.5" style={{ color: avgRate >= 80 ? '#22c55e' : '#eab308' }}>{avgRate.toFixed(1)}%</div>
             <div className="text-xs" style={{ color: 'var(--text-secondary)' }}>平均出席率</div>
           </div>
-          <div className="card text-center" style={{ borderColor: lowCount > 0 ? 'rgba(239,68,68,0.3)' : undefined }}>
-            <div className="text-2xl font-bold mb-0.5" style={{ color: '#ef4444' }}>{lowCount}</div>
+          <div className="card text-center px-2" style={{ borderColor: lowCount > 0 ? 'rgba(239,68,68,0.3)' : undefined }}>
+            <div className="text-xl md:text-2xl font-bold mb-0.5" style={{ color: '#ef4444' }}>{lowCount}</div>
             <div className="text-xs" style={{ color: 'var(--text-secondary)' }}>出席率 &lt; 70%</div>
           </div>
         </div>
       )}
 
       {/* Filters */}
-      <div className="card mb-6">
-        <div className="flex flex-wrap gap-3 items-center">
-          {/* Search */}
-          <div className="flex items-center gap-2 rounded-lg px-3 py-2 flex-1 min-w-[180px]" style={{ background: 'var(--bg-primary)', border: '1px solid var(--border)' }}>
-            <Search size={14} style={{ color: 'var(--text-secondary)' }} />
-            <input
-              type="text"
-              placeholder="搜尋委員姓名或選區…"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              className="bg-transparent text-sm outline-none flex-1"
-              style={{ color: 'var(--text-primary)' }}
-            />
-          </div>
+      <div className="card mb-5 md:mb-6">
+        {/* Search */}
+        <div className="flex items-center gap-2 rounded-lg px-3 py-2 mb-3" style={{ background: 'var(--bg-primary)', border: '1px solid var(--border)' }}>
+          <Search size={14} style={{ color: 'var(--text-secondary)' }} />
+          <input
+            type="text"
+            placeholder="搜尋委員姓名或選區…"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="bg-transparent text-sm outline-none flex-1"
+            style={{ color: 'var(--text-primary)' }}
+          />
+        </div>
 
-          {/* Party filter */}
-          <div className="flex items-center gap-1.5 flex-wrap">
-            {PARTIES.map(p => {
-              const active = party === p
-              const color = PARTY_COLORS[p]
-              return (
-                <button key={p} onClick={() => setParty(p)}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
-                  style={{
-                    background: active ? (color ? color + '20' : 'rgba(59,130,246,0.15)') : 'transparent',
-                    color: active ? (color ?? '#60a5fa') : 'var(--text-secondary)',
-                    border: active ? `1px solid ${color ? color + '40' : 'rgba(59,130,246,0.3)'}` : '1px solid transparent',
-                  }}>
-                  {p}
-                </button>
-              )
-            })}
-          </div>
+        {/* Party filter chips */}
+        <div className="flex items-center gap-1.5 flex-wrap mb-3">
+          {PARTIES.map(p => {
+            const active = party === p
+            const color = PARTY_COLORS[p]
+            return (
+              <button key={p} onClick={() => setParty(p)}
+                className="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
+                style={{
+                  background: active ? (color ? color + '20' : 'rgba(59,130,246,0.15)') : 'transparent',
+                  color: active ? (color ?? '#60a5fa') : 'var(--text-secondary)',
+                  border: active ? `1px solid ${color ? color + '40' : 'rgba(59,130,246,0.3)'}` : '1px solid transparent',
+                }}>
+                {p}
+              </button>
+            )
+          })}
+        </div>
 
-          {/* Alert filter */}
+        {/* Bottom row: alert filter + sort */}
+        <div className="flex items-center gap-2 flex-wrap">
           <button onClick={() => setFilter(f => f === 'low' ? 'all' : 'low')}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
             style={{
@@ -120,9 +120,8 @@ export default function MembersPage() {
             僅顯示警示
           </button>
 
-          {/* Sort */}
           <select value={sort} onChange={e => setSort(e.target.value as typeof sort)}
-            className="px-3 py-1.5 rounded-lg text-xs outline-none"
+            className="px-3 py-1.5 rounded-lg text-xs outline-none ml-auto"
             style={{ background: 'var(--bg-primary)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
             <option value="attendance-asc">出席率 ↑</option>
             <option value="attendance-desc">出席率 ↓</option>
@@ -135,11 +134,11 @@ export default function MembersPage() {
         <LoadingSpinner label="正在載入委員資料…" />
       ) : (
         <>
-          <div className="flex items-center gap-2 mb-4 text-sm" style={{ color: 'var(--text-secondary)' }}>
+          <div className="flex items-center gap-2 mb-3 text-sm" style={{ color: 'var(--text-secondary)' }}>
             <Filter size={13} />
             <span>顯示 {filtered.length} 位委員</span>
           </div>
-          <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
+          <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))' }}>
             {filtered.map((m, i) => (
               <MemberCard key={m.id} member={m} rank={sort === 'attendance-asc' ? i + 1 : undefined} />
             ))}

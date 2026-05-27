@@ -35,10 +35,10 @@ export default function DashboardPage() {
   const topLow = [...lowAttendance].sort((a, b) => (a.attendanceRate ?? 0) - (b.attendanceRate ?? 0)).slice(0, 4)
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>立院守望台</h1>
+      <div className="mb-6 md:mb-8">
+        <h1 className="text-xl md:text-2xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>立院守望台</h1>
         <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
           第11屆立法委員即時監察 — 出席率、法案審查、發言紀錄
         </p>
@@ -46,8 +46,8 @@ export default function DashboardPage() {
 
       {loading ? <LoadingSpinner label="正在載入立法院資料…" /> : (
         <>
-          {/* Stats row */}
-          <div className="grid grid-cols-2 gap-4 mb-8" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
+          {/* Stats row — 2 cols on mobile, 4 on desktop */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-8">
             <StatCard
               title="總委員數"
               value={members.length}
@@ -79,36 +79,36 @@ export default function DashboardPage() {
             />
           </div>
 
-          {/* Bill summary pills */}
-          <div className="card mb-8">
+          {/* Bill summary pills — 2 cols on mobile, 4 on desktop */}
+          <div className="card mb-6 md:mb-8">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="font-semibold" style={{ color: 'var(--text-primary)' }}>法案審查概況</h2>
+              <h2 className="font-semibold text-sm md:text-base" style={{ color: 'var(--text-primary)' }}>法案審查概況</h2>
               <Link href="/bills" className="flex items-center gap-1 text-xs" style={{ color: '#60a5fa' }}>
                 查看全部 <ArrowRight size={12} />
               </Link>
             </div>
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {[
                 { label: '已通過', value: billStats.passed,   color: '#22c55e', icon: CheckCircle },
                 { label: '審查中', value: billStats.reviewing, color: '#60a5fa', icon: Clock },
                 { label: '待審查', value: billStats.pending,  color: '#facc15', icon: Clock },
                 { label: '已撤回', value: billStats.withdrawn, color: '#f87171', icon: AlertTriangle },
               ].map(({ label, value, color, icon: Icon }) => (
-                <div key={label} className="rounded-xl p-4 text-center" style={{ background: color + '12', border: `1px solid ${color}25` }}>
-                  <Icon size={20} color={color} className="mx-auto mb-2" />
-                  <div className="text-2xl font-bold mb-0.5" style={{ color }}>{value}</div>
+                <div key={label} className="rounded-xl p-3 md:p-4 text-center" style={{ background: color + '12', border: `1px solid ${color}25` }}>
+                  <Icon size={18} color={color} className="mx-auto mb-1.5" />
+                  <div className="text-xl md:text-2xl font-bold mb-0.5" style={{ color }}>{value}</div>
                   <div className="text-xs" style={{ color: 'var(--text-secondary)' }}>{label}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Bottom two columns */}
-          <div className="grid gap-6" style={{ gridTemplateColumns: '1fr 1fr' }}>
+          {/* Bottom section — stacked on mobile, 2 cols on desktop */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Low attendance alert */}
             <div>
               <div className="flex items-center justify-between mb-3">
-                <h2 className="font-semibold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                <h2 className="font-semibold text-sm md:text-base flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                   <TrendingDown size={16} color="#ef4444" />
                   出席率偏低委員
                 </h2>
@@ -130,7 +130,7 @@ export default function DashboardPage() {
             {/* Recently passed bills */}
             <div>
               <div className="flex items-center justify-between mb-3">
-                <h2 className="font-semibold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                <h2 className="font-semibold text-sm md:text-base flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                   <CheckCircle size={16} color="#22c55e" />
                   近期通過法案
                 </h2>

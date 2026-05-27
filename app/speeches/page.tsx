@@ -43,9 +43,9 @@ export default function SpeechesPage() {
   }, [speeches, committee, search])
 
   return (
-    <div className="p-8">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>委員發言記錄</h1>
+    <div className="p-4 md:p-8">
+      <div className="mb-5 md:mb-6">
+        <h1 className="text-xl md:text-2xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>委員發言記錄</h1>
         <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
           115年（2026年）4月至5月，立法院院會及各委員會發言紀錄
         </p>
@@ -53,27 +53,27 @@ export default function SpeechesPage() {
 
       {/* Top speakers */}
       {!loading && topSpeakers.length > 0 && (
-        <div className="card mb-6">
+        <div className="card mb-5 md:mb-6">
           <div className="flex items-center gap-2 mb-4">
             <BarChart3 size={16} color="#60a5fa" />
             <span className="font-medium text-sm" style={{ color: 'var(--text-primary)' }}>本期發言最多委員 TOP 10</span>
           </div>
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             {topSpeakers.map((s, i) => {
               const speech = speeches.find(sp => sp.name === s.name)
               const partyColor = PARTY_COLORS[speech?.party ?? ''] ?? '#6b7280'
               const max = topSpeakers[0]?.count ?? 1
               return (
-                <div key={s.name} className="flex items-center gap-3">
-                  <span className="text-xs font-mono w-5 text-right" style={{ color: i < 3 ? '#60a5fa' : 'var(--text-secondary)' }}>
+                <div key={s.name} className="flex items-center gap-2 md:gap-3">
+                  <span className="text-xs font-mono w-4 text-right flex-shrink-0" style={{ color: i < 3 ? '#60a5fa' : 'var(--text-secondary)' }}>
                     {i + 1}
                   </span>
-                  <span className="text-sm w-20 flex-shrink-0" style={{ color: 'var(--text-primary)' }}>{s.name}</span>
+                  <span className="text-sm w-16 md:w-20 flex-shrink-0 truncate" style={{ color: 'var(--text-primary)' }}>{s.name}</span>
                   <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: 'var(--border)' }}>
                     <div className="h-full rounded-full transition-all"
                       style={{ width: `${(s.count / max) * 100}%`, background: partyColor }} />
                   </div>
-                  <span className="text-xs w-8 text-right font-medium" style={{ color: 'var(--text-secondary)' }}>{s.count}</span>
+                  <span className="text-xs w-6 md:w-8 text-right font-medium flex-shrink-0" style={{ color: 'var(--text-secondary)' }}>{s.count}</span>
                 </div>
               )
             })}
@@ -82,11 +82,12 @@ export default function SpeechesPage() {
       )}
 
       {/* Filters */}
-      <div className="card mb-6">
-        <div className="flex flex-wrap gap-2 mb-3">
+      <div className="card mb-5 md:mb-6">
+        {/* Committee filter chips */}
+        <div className="flex flex-wrap gap-1.5 mb-3">
           {committees.map(c => (
             <button key={c} onClick={() => setCommittee(c)}
-              className="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
+              className="px-2.5 md:px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
               style={{
                 background: committee === c ? 'rgba(59,130,246,0.15)' : 'transparent',
                 color: committee === c ? '#60a5fa' : 'var(--text-secondary)',
